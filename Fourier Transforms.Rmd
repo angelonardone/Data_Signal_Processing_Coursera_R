@@ -1,0 +1,17 @@
+---
+title: "Fourier Transforms"
+author: "Angelo Nardone"
+date: "January 30, 2015"
+output: html_document
+---
+
+
+The discrete Fourier transform (DFT) of a signal is defined using the following formula:
+
+$X(k)=\sum_{n=0}^{N-1} x(n) e^{-j(2\pi/N)(n)(k)},k=0,\ldots,N-1.$
+
+Similar formula is used for the discrete Fourier series (DFS) of a periodic signal.
+
+The DFS / DFT is a vector of complex numbers which can be represented via their magnitude $|X(n)|$  (absolute value) 
+and phase $\arctan \frac{\text{Im}(X(n))}{\text{Re}(X(n))}n=0,\ldots,N-1$
+

@@ -1,0 +1,64 @@
+---
+title: "Karplus-Strong Algorithm"
+author: "Angelo Nardone"
+date: "January 30, 2015"
+output: html_document
+---
+
+```{r, echo=FALSE, plot_dsp_style}
+plot_dsp_style <- function(x)
+{
+    plot(x,type="h")
+    points(x,type="p")
+    abline(h=0,col="red")
+}
+
+```
+Let's explore the R code implementing the equation
+
+$y[n]= \alpha y[n-M]+x[n],$
+
+where x[n] is the input signal, M is the delay, and α is the decay. 
+We assume that the value of the delay M is equal to the length of the input signal x. 
+In words, it is like filling the delay buffer and then recursively going over it. 
+Additionally, we set the length of the output to be a multiple of the delay M (i.e., of the length of the input signal). 
+This is controlled by the argument D, so that the output length is D∗M.
+
+```{r ks_loop}
+ks_loop <- function(x,alpha,D)
+{
+    if (D <= 0) stop ("D has to be bigger than 0 (cero)")
+    if (length(x)<=1) stop("x should be a secuence of data biger than 1")
+    
+    M <- length(x)
+    size_y <- D * M
+    y <- x
+    
+    for (i in M:size_y)
+    {
+        # we add the 1 because in R the vectors starts with the index 1
+        y[i] <- alpha * y[i-M +1]
+    }
+    return(y)
+}
+```
+
+
+First let's crate a random sequece of 100 and plot it
+```{r}
+x <-rnorm(100)
+# plot random data
+plot_dsp_style(x)
+```
+
+And now let's apply the <b> ks_loop </b> algorithm
+
+```{r}
+# apply ks_loop algorithm
+ks <- ks_loop(x, .9, 10)
+# plot the KS applied to the random generated data
+plot_dsp_style(ks)
+```
+
+
+
